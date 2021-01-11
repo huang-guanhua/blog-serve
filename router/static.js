@@ -16,7 +16,7 @@ module.exports = function(req,res,next){
       res.end(data);
     }else if(url === '/'){
       res.writeHead(200, {'Content-Type' : `text/html; charset=utf-8`});
-      res.end('访问地址路径不正确，需要具体到项目');
+      res.end('访问地址路径不正确，需要具体到项目地址');
     } else {
       next(req,res);
     }

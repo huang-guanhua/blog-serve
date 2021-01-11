@@ -21,7 +21,7 @@ function handleAction(req,res){
       break;
     default:
       res.writeHead(404, {'Content-Type' : 'text/html; charset=utf-8'})
-      res.end('not found')
+      res.end('not found url')
   }
 
 }
