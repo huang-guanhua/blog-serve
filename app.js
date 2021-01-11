@@ -1,6 +1,6 @@
 const http = require('http');
 const routers = require('./router');
-const port = 8080;
+const port = 80;
 
 const handle = (request, response) => {
   routers(request, response);
