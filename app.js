@@ -7,5 +7,5 @@ const handle = (request, response) => {
 }
 
 http.createServer(handle).listen(port, () => {
-  console.log(`server is success，listen on ${port}！`)
+  console.log(`server is success，listen on ${port}`)
 })
