@@ -21,7 +21,7 @@ module.exports = function(req,res,next){
       res.end('访问地址路径不正确，需要具体到项目地址');
     }else if(isProjectrRoot.length){
       if(url === `/${isProjectrRoot[0]}`){
-        res.writeHead(302,{
+        res.writeHead(301,{
           'Location': `/${isProjectrRoot[0]}/`
         })
         res.end();
