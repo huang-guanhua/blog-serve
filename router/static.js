@@ -20,6 +20,12 @@ module.exports = function(req,res,next){
       res.writeHead(200, {'Content-Type' : `text/html; charset=utf-8`});
       res.end('访问地址路径不正确，需要具体到项目地址');
     }else if(isProjectrRoot.length){
+      if(url === `/${isProjectrRoot[0]}`){
+        res.writeHead(302,{
+          'Location': `/${isProjectrRoot[0]}/`
+        })
+        res.end();
+      }
       fs.readFile(path.resolve(process.cwd(), `/home/deploy/${isProjectrRoot[0]}/index.html`), async (err, data) => {
         if(!err){
           const resType = await moduleInfo.contentTypeinfo(ext);
