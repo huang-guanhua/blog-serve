@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://blog:blog@127.0.0.1:27017/blog', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://blog:blog@47.103.199.247:27017/blog', {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.once('open', function() {
     console.log('database connect success')
 })
