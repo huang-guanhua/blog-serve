@@ -15,7 +15,7 @@ function selectALl(){
 }
 
 function login(param = {}){
-  let newPar = Object.assign({}, param);
+  let newPar = {account:param.account, password:param.password};
   return userLogin(newPar);
 }
 

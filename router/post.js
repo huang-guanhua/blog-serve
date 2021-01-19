@@ -1,20 +1,23 @@
 const url = require('url');
 const userController = require('../controller/user');
 const tool = require('../util');
+const auth = require('../util/auth');
 
 module.exports = function(req,res){
   const {pathname, query} = url.parse(req.url, true);
 
-  res.writeHead(200, {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type,Content-Length, Authorization, Accept,X-Requested-With",
-    "Access-Control-Allow-Methods": "PUT,POST,GET,DELETE,OPTIONS",
-    "Content-Type": "text/json; charset=utf-8"
-  })
+  // const corsHead = {
+  //   "Access-Control-Allow-Origin": "*",
+  //   "Access-Control-Allow-Headers": "Content-Type,Content-Length, Authorization, Accept,X-Requested-With",
+  //   "Access-Control-Allow-Methods": "PUT,POST,GET,DELETE,OPTIONS",
+  //   "Content-Type": "text/json; charset=utf-8"
+  // }
 
-  // res.setHeader("Access-Control-Allow-Origin", "*");
-  // res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-  // res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+  res.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Credentials",true);
+  res.setHeader("Content-Type","text/json; charset=utf-8");
 
   if(pathname === '/api/register'){
     tool.changePostParam(req).then(value => {
@@ -41,12 +44,16 @@ module.exports = function(req,res){
         userController.login(value)
         .then(respones => {
           if(respones){
+            const token = auth.sign({account:value.account, password: value.password});
+            // console.log(token, 'token');
+            res.setHeader('Set-Cookie', [`auth=${token}`]);
             res.end(JSON.stringify({status: 200, auth: 1, user: value.account, message: '验证成功'}));
           }else {
             res.end(JSON.stringify({status: 200, auth: 0, message: `验证失败`}));
           }
         })
         .catch(err => {
+          console.log('err',err)
           res.end(JSON.stringify({status: 200, message: err}));
         })
       } else {
