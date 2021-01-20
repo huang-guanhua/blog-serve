@@ -8,9 +8,14 @@ module.exports = function(req,res){
   const {pathname, query} = url.parse(req.url, true);
   function next(req,res){
 
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    // res.setHeader("Access-Control-Allow-Origin", "*");
     // res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     // res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Credentials",true);
+    res.setHeader("Content-Type","text/json; charset=utf-8");
 
     if(pathname === '/api/list'){
       // res.setHeader('Access-Control-Allow-Origin', '*');

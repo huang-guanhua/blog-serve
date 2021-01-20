@@ -2,6 +2,7 @@ const url = require('url');
 const userController = require('../controller/user');
 const tool = require('../util');
 const auth = require('../util/auth');
+const cookie = require('cookie');
 
 module.exports = function(req,res){
   const {pathname, query} = url.parse(req.url, true);
@@ -46,7 +47,12 @@ module.exports = function(req,res){
           if(respones){
             const token = auth.sign({account:value.account, password: value.password});
             // console.log(token, 'token');
-            res.setHeader('Set-Cookie', [`auth=${token}`]);
+            // res.setHeader('Set-Cookie', `auth=${token}; path=/api`);
+            res.setHeader('Set-Cookie', cookie.serialize('auth', `${token}` ,{
+              httpOnly: true,
+              maxAge: 60 * 1,
+              domain: '/'
+            }) );
             res.end(JSON.stringify({status: 200, auth: 1, user: value.account, message: '验证成功'}));
           }else {
             res.end(JSON.stringify({status: 200, auth: 0, message: `验证失败`}));
