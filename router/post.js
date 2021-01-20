@@ -49,7 +49,7 @@ module.exports = function(req,res){
             // console.log(token, 'token');
             // res.setHeader('Set-Cookie', `auth=${token}; path=/api`);
             res.setHeader('Set-Cookie', cookie.serialize('auth', `${token}` ,{
-              httpOnly: true,
+              // httpOnly: true,
               maxAge: 60 * 1,
               path: '/'
             }) );
