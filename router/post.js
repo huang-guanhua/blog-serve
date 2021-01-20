@@ -51,7 +51,7 @@ module.exports = function(req,res){
             res.setHeader('Set-Cookie', cookie.serialize('auth', `${token}` ,{
               httpOnly: true,
               maxAge: 60 * 1,
-              domain: '/'
+              path: '/'
             }) );
             res.end(JSON.stringify({status: 200, auth: 1, user: value.account, message: '验证成功'}));
           }else {
