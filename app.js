@@ -2,7 +2,7 @@ const https = require('https');
 const http = require('http');
 const routers = require('./router');
 const fs = require('fs');
-const httpport = 8080;
+const httpport = 80;
 const httpsport = 443;
 
 const options = {
