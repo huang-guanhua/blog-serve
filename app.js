@@ -12,7 +12,6 @@ const options = {
   cert: fs.readFileSync('./keys/4964770_huangguanhua.cn.pem')
 };
 
-
 const handle = (request, response) => {
   routers(request, response);
 }
@@ -22,6 +21,7 @@ const serverhttps = https.createServer(options, handle);
 
 const ws = new WebSocket.Server({ server: serverhttp });
 const wss = new WebSocket.Server({ server: serverhttps });
+// 处理http和https
 socket(ws, 'http')
 socket(wss, 'https')
 
