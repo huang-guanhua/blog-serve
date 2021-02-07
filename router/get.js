@@ -1,6 +1,7 @@
 const url = require('url');
 const static = require('./static');
 const userController = require('../controller/user');
+const even = require('./event');
 
 module.exports = function(req,res){
   // const {url} = req;
@@ -49,6 +50,7 @@ module.exports = function(req,res){
     } else if(pathname === '/api/menu/list'){
       userController.findItemList(query)
       .then(value => {
+        even().emit('update', value)
         res.writeHead(200, {'Content-Type' : `text/json; charset=utf-8`});
         res.end(JSON.stringify({status: 200, data: {limit: Number(query.limit), start: Number(query.start), ...value}, success: 'ok', url: pathname}));
       })

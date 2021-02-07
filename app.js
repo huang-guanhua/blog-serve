@@ -2,6 +2,8 @@ const https = require('https');
 const http = require('http');
 const routers = require('./router');
 const fs = require('fs');
+const WebSocket = require('ws');
+const socket = require('./router/ws');
 const httpport = 80;
 const httpsport = 443;
 
@@ -15,9 +17,17 @@ const handle = (request, response) => {
   routers(request, response);
 }
 
-http.createServer(handle).listen(httpport, () => {
+const serverhttp = http.createServer(handle);
+const serverhttps = https.createServer(options, handle);
+
+const ws = new WebSocket.Server({ server: serverhttp });
+const wss = new WebSocket.Server({ server: serverhttps });
+socket(ws, 'http')
+socket(wss, 'https')
+
+serverhttp.listen(httpport, () => {
   console.log(`http server is success，listen on ${httpport}`)
 })
-https.createServer(options, handle).listen(httpsport, () => {
-  console.log(`server is success，listen on ${httpsport}`)
+serverhttps.listen(httpsport, () => {
+  console.log(`https server is success，listen on ${httpsport}`)
 })
