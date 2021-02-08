@@ -22,6 +22,7 @@ const sendUserConfig = (emailUrl) => ({
       <body>
         <div>来自hgh博客的提醒邮件👻</div>
         <div>${new Date().toLocaleString()}</div>
+        <div>--blog</div>
       </body>
     </html>
   `,
