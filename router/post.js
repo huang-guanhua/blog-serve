@@ -1,5 +1,6 @@
 const url = require('url');
 const userController = require('../controller/user');
+const email = require('../controller/email');
 const tool = require('../util');
 const auth = require('../util/auth');
 const cookie = require('cookie');
@@ -64,6 +65,23 @@ module.exports = function(req,res){
         })
       } else {
         res.end(JSON.stringify({status: 200, message: '参数不足-登录'}));
+      }
+    })
+  } else if (pathname === '/api/email'){
+    tool.changePostParam(req).then(data => {
+      if(data.url && data.type){
+        email.sendEmail(data).then(value => {
+          if(value){
+            res.end(JSON.stringify({status: 200, message: '邮件发送成功'}));
+          }else{
+            res.end(JSON.stringify({status: 500, message: '邮件发送异常'}));
+          }
+        }).catch(err => {
+          res.end(JSON.stringify({status: 500, message: '邮件发送失败', err:err}));
+        })
+
+      }else{
+        res.end(JSON.stringify({status: 200, message: '失败，参数有误或不足'}))
       }
     })
   } else {
