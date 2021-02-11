@@ -12,7 +12,7 @@ const config = {
   }
 }
 
-const sendUserConfig = (emailUrl) => ({
+const sendUserConfig = (emailUrl, content) => ({
   from: '"blog" <huangguanhuablog@aliyun.com>', // sender address
   to: emailUrl, // list of receivers
   subject: "send ✔", // Subject line
@@ -20,6 +20,7 @@ const sendUserConfig = (emailUrl) => ({
   html: `
     <html>
       <body>
+        <div>${content}</div>
         <div>来自hgh博客的提醒邮件👻</div>
         <div>${new Date().toLocaleString()}</div>
         <div>--blog</div>
@@ -29,9 +30,9 @@ const sendUserConfig = (emailUrl) => ({
 })
 
 async function sendEmail(data){
-  const {type = 1, url = ''} = data; // TODO 邮箱地址正则验证
+  const {type = 1, url = '', content = ''} = data; // TODO 邮箱地址正则验证
   const Account = await nodemailer.createTransport(config);
-  return Account.sendMail(sendUserConfig(url))
+  return Account.sendMail(sendUserConfig(url, content))
 }
 
 
