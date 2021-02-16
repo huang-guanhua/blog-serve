@@ -30,7 +30,9 @@ function wsfun(socket){
         if(msg.name){
           messageData.push(msg);
         }
-
+        if(msg.name === 'root'){
+          messageData = []
+        }
         ws.send(JSON.stringify({
           list: messageData
         }))
@@ -61,7 +63,9 @@ function wssfun(socket){
         if(msg.name){
           messageData.push(msg);
         }
-
+        if(msg.name === 'root'){
+          messageData = []
+        }
         ws.send(JSON.stringify({
           list: messageData
         }))
